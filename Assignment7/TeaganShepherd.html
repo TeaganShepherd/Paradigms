@@ -1,0 +1,277 @@
+<!doctype html>
+<html>
+    <body>
+        <title>Teagan Shepherd's Assignment 7</title>
+        <h1 align ="center">Teagan Shepherd's Assignment 7</h1>
+        <form>
+            Engine Description:<br>
+            <input type ="text" id = "engineDes"><br>
+            Miles per Gallon<br>
+            <input type = "number" id = "mpg"><br>
+            Max Speed<br>
+            <input type = "number" id = "maxSpeed"><br>
+            Car Description<br>
+            <input type = "text" id = "carDesc"><br>
+            Max Fuel Capacity<br>
+            <input type = "number" id = "maxFuel"><br>
+            <button type="button" onclick="createCar()" >Create Car</button>
+        </form>
+        <p id = "madeCar"></p>
+        <form id = "part2" style = "display:none">
+            Miles to Drive:<br>
+            <input type ="text" id = "milesToDrive"><br>
+            X Ratio:<br>
+            <input type = "number" id = "xRatio"><br>
+            Y Ratio:<br>
+            <input type = "number" id = "yRatio"><br>
+            <button type="button" onclick="driveCar()">Drive the Car</button>
+        </form>
+        <p id ="drivenCar"></p>
+
+        <script>
+            var engine1;
+            var car1;
+
+            function showCar(passed){
+                console.log("Now we are here");
+                document.getElementById(passed).innerHTML = car1.getDescription();
+            }
+            function hide(){
+                var x = document.getElementById("part2");
+                x.style.display = "none";
+            }
+            function show(){
+                var x = document.getElementById("part2");
+                x.style.display = "block";
+            }
+
+            function outOfGas(miles){
+                alert("Ran out of gas after driving " + miles + " miles.");
+            }
+            function createCar(){
+                console.log("Engine Description: " + document.getElementById("engineDes").value);
+                console.log("Miles per Gallon: " + document.getElementById("mpg").value);
+                console.log("Max Speed: " + document.getElementById("maxSpeed").value);
+                console.log("Car Description: " + document.getElementById("carDesc").value);
+                console.log("Max Fuel Capacity: " + document.getElementById("maxFuel").value);
+
+                engine1 = new Engine(document.getElementById("engineDes").value,document.getElementById("mpg").value,document.getElementById("maxSpeed").value);
+                car1 = new Car(document.getElementById("carDesc").value,document.getElementById("maxFuel").value,engine1);
+                car1.fillUp();
+                showCar("madeCar");
+                show();
+                return false;
+            }
+
+            function driveCar(){
+                console.log("Miles to drive: " + document.getElementById("milesToDrive").value)
+                console.log("X Ratio: " + document.getElementById("xRatio").value)
+                console.log("Y Ratio: " + document.getElementById("yRatio").value)
+                
+                car1.drive(document.getElementById("milesToDrive").value,document.getElementById("xRatio").value,document.getElementById("yRatio").value);
+                showCar("drivenCar");
+            }
+
+            class Car{
+
+                constructor(desc,maxF,enj){
+                    console.log("inside car constructor");
+                
+                    //Checking description
+                    if(desc.length == 0){
+                        this.carDescription = "Generic car";
+                    }
+                    else{
+                        this.carDescription = desc;
+                    }
+
+                    //Checking the engine
+                    // ** MIGHT need to check for something other than NULL 
+                    if (enj == null){
+                        this.engine = new Engine("",0,0);
+                    }
+                    else{
+                        this.engine = enj;
+                    }
+
+
+
+                    this.xCoord = 0;
+                    this.yCoord = 0;
+                    this.maxFuel = maxF;
+                    this.myTank = new GasTank(maxF);
+                    console.log("Thru car constructor");
+                    //Functions
+                        this.getDescription =function(){
+                            console.log("CarDesc");
+                            return this.carDescription + "(" + this.engine.getDescription() + ")," + this.myTank.getTank() + ",location: (" + this.xCoord + "," + this.yCoord + ")";
+                        }
+                        this.getX = function(){
+                            return this.xCoord;
+                        }
+                        this.getY = function(){
+                            return this.yCoord;
+                        }
+                        this.getFuelLevel = function(){
+                            return this.myTank.getLevel();
+                        }
+                        this.getMPG = function(){
+                            return this.enj.getMPG();
+                        }
+                        this.getMaxSpeed = function(){
+                            return this.enj.getMaxSpeed();
+                        }
+                        this.fillUp = function(){
+                            this.myTank.setLevel(this.myTank.getCapacity());
+                        }
+                        this.drive = function(distance,xRatio,yRatio){
+                            this.hypotenuse = Math.abs(Math.sqrt(  Math.pow(xRatio,2) + Math.pow(yRatio,2)  ));
+                            this.gasLeft = this.myTank.getLevel();
+                            this.madeIt = true;
+                            this.possibleDistance =distance;
+
+                            console.log("Distance =" + distance + "tank Level = " + this.myTank.getLevel() + "mpg = " + this.engine.getMPG());
+                            if(distance <= this.myTank.getLevel() * this.engine.getMPG()){
+                                console.log("We are the if");
+                                //System.out.println("xCoord+=  " + (int)( (distance * xRatio) / hypotenuse)+.5);
+                                
+                                this.xCoord += ( (distance * xRatio) / this.hypotenuse);
+                                this.xCoord = this.xCoord.toFixed(2);
+                                //System.out.println("yCoord+=  "+ (int) ((distance * yRatio) / hypotenuse)+.5);
+                                this.yCoord += ((distance * yRatio) / this.hypotenuse);
+                                this.yCoord = this.yCoord.toFixed(2);
+                                //System.out.println("myTank.getlvl:  " + myTank.getLevel() + "  Distance: " + distance + "   MyEngine.mpg: " + myEngine.getMPG());
+                                //System.out.println("100/30 "+100/(double)30);
+                                this.gasLeft = this.myTank.getLevel() - ((distance / this.engine.getMPG() ))  ;
+                                this.gasLeft = this.gasLeft.toFixed(2);
+                                console.log(this.gasLeft);
+                                //System.out.println("Setting gasLeft() " + gasLeft);
+                            }
+
+
+                            else if(0 < this.myTank.getLevel() * this.engine.getMPG()){
+                                console.log("We are in the else if");
+                                this.possibleDistance = this.myTank.getLevel() * this.engine.getMPG();
+                                //System.out.println("xCoord+=  " + (int)( (possibleDistance * xRatio) / hypotenuse) );
+                                this.xCoord +=  ((this.possibleDistance * xRatio) / this.hypotenuse );
+                                this.xCoord = this.xCoord.toFixed(2);
+                                //System.out.println("yCoord+=  "+ (int) ((possibleDistance * yRatio) / hypotenuse));
+                                this.yCoord +=  ((this.possibleDistance * yRatio) / this.hypotenuse );
+                                this.yCoord = this.yCoord.toFixed(2);
+                                this.gasLeft = 0.0;
+                                this.madeIt = false;
+                            }
+
+                            else {
+                                console.log("We are in the else ");
+                                this.possibleDistance = 0;
+                                this.gasLeft = 0.0;
+                                this.madeIt = false;
+                            }
+
+                            this.myTank.setLevel(this.gasLeft);
+                            if(!this.madeIt){
+                                console.log("Ran out of gas after driving " + this.possibleDistance +" miles.");
+                                outOfGas(this.possibleDistance.toFixed(2));
+                                return this.possibleDistance;
+                            }
+                            console.log("Distance: " + distance);
+                            return distance;
+                        }
+
+
+                }
+
+
+
+
+                
+            }
+
+            class GasTank{
+                constructor(maxC){
+                    console.log("MaxC = " + maxC);
+                    console.log("Inside Tank Constructor");
+                    if(maxC > 0){
+                        console.log("bigger than 0");
+                        this.maxCapacity = maxC;
+                    }
+                    else{
+                        console.log("less than 0");
+                        this.maxCapacity = 0;
+                    }
+                    this.currentLevel = 0;
+                    console.log("Finished Tank Constructor")
+                    //Functions
+                        this.getCapacity = function(){
+                            return this.maxCapacity;
+                        }
+                        this.getLevel = function(){
+                            return this.currentLevel;
+                        } 
+                        this.getTank = function(){
+                            console.log("tank description");
+                            return "fuel: " + this.getLevel() + "/"+ this.getCapacity();
+                        }
+                        this.setLevel = function(lvlIn){
+                            this.levelIn = lvlIn;
+                            if(this.levelIn >= 0 && this.levelIn <= this.maxCapacity){
+                                this.currentLevel = this.levelIn;
+                            }
+                            else if (this.maxCapacity <= this.levelIn){
+                                this.currentLevel = this.maxCapacity;
+                            }
+                            else{
+                                //Do nothing
+                            }
+                        }    
+
+                }
+            }
+
+            class Engine{
+                constructor(name,mpg,maxSp){
+                    console.log("inside engine constructor");
+                    //Checking the name of the engine
+                    if(name.length == 0){
+                                this.engineSize = "Generic engine";
+                            }
+                            else{
+                                this.engineSize = name;
+                            }
+
+                            //Cheking the inputted MPG to be > 0
+
+                            if(mpg < 0){
+                                this.milesPerGallon = 0;
+                            }
+                            else{
+                                this.milesPerGallon = mpg;
+                            }
+                            //Checking the inputted maxSpeed to be > 0
+
+                            if(maxSp < 0){
+                                this.maxSpeed = 0;
+                            }
+                            else{
+                                this.maxSpeed = maxSp;
+                            }
+
+                    console.log("finishing engine construction");
+                    //Functions
+                        this.getDescription = function(){
+                            console.log("Engine desc");
+                            return this.engineSize + "(MPG: " +  this.getMPG() + ",Max speed: " + this.getMaxSpeed();
+                        }
+                        this.getMPG = function(){
+                            return this.milesPerGallon;
+                        }
+                        this.getMaxSpeed = function(){
+                            return this.maxSpeed;
+                        }
+                }
+            }
+        </script>
+    </body>
+    
+</html>

@@ -1,0 +1,13 @@
+{
+    "python.pythonPath": "env/bin/python",
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./Assignment10",
+        "-p",
+        "*test.py"
+    ],
+    "python.testing.pyTestEnabled": false,
+    "python.testing.nosetestsEnabled": false,
+    "python.testing.unittestEnabled": true
+}

@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+    <body style = "background-color:#33ECFF;">
+        <title>Teagan Shepherd's page</title>
+        <h1 align="center">Teagan Shepherd's page</h1>
+        <p>This page was made for Assignment 6 in programming paradigms.
+            On this page you will see a 3 question quiz, with a link to information that can help you solve the quiz.
+            The quiz will be over cars.
+            <a href = "https://www.car.info/en-se/" target="_blank">Link to cars</a>
+        </p>
+
+
+        <p>Q1.) Which of these is not a car brand? 
+                <p onclick ="checkAnswer(0,'question1')"><br>- Saab</br></p>
+                <p onclick ="checkAnswer(0,'question1')"><br>- Jaguar</br></p>
+                <p onclick ="checkAnswer(1,'question1')"><br>- Boeing</br></p>
+                <p onclick ="checkAnswer(0,'question1')"><br>- Ford</br></p>
+                <p id= "question1"></p>
+        </p>
+
+        <p>Q2.) Which of these car brands is German? 
+                <p onclick ="checkAnswer(1,'question2')"><br>- Audi</br></p>
+                <p onclick ="checkAnswer(0,'question2')"><br>- Cadillac</br></p>
+                <p onclick ="checkAnswer(0,'question2')"><br>- Fiat</br></p>
+                <p onclick ="checkAnswer(0,'question2')"><br>- Oldsmobile</br></p>
+                <p id= "question2"></p>
+        </p>
+
+        <p>
+            Q3.) Which of these is a sedan?
+            <p><br>
+                <img src="Coupe.jpg" style="width:300px;height:200px;" onclick ="checkAnswer(0,'question3')">
+                <img src="Pickup.jpg" style="width:300px;height:200px;" onclick ="checkAnswer(0,'question3')">
+                <img src="StationWagon.jpg" style="width:300px;height:200px;" onclick ="checkAnswer(0,'question3')">
+                <img src="Sedan.jpg" style="width:300px;height:200px; " onclick ="checkAnswer(1,'question3')">
+            </p></br>
+
+            <p id= "question3"></p>
+        </p>
+
+        <p>
+            <button type="button" onclick="reset()">Reset</button>
+        </p>
+
+        <script>
+            function checkAnswer(val, question){
+                if(val ==0){
+                    document.getElementById(question).style.color = "red";
+                    document.getElementById(question).innerHTML = "Your answer is incorrect";
+                }
+                if(val == 1){
+                    document.getElementById(question).style.color = "green";
+                    document.getElementById(question).innerHTML = "Your answer is correct";
+                }
+            }
+
+            function reset(){
+                document.getElementById("question1").innerHTML = "";
+                document.getElementById("question2").innerHTML = "";
+                document.getElementById("question3").innerHTML = "";
+            }
+        </script>
+
+
+    </body>
+</html>

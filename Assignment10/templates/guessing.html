@@ -1,0 +1,12 @@
+<html>
+<head>
+	<title>Assignment 10</title>
+
+	<p>Oops!  Your guess, {{guess}}, was wrong.  Please try again!</p>
+	<form method="post" action="/guessed">
+		Your guess: <input type="text" name="guess">
+		<input type="hidden" name="answer" value={{randomNum}}>
+		<input type="submit" value="Guess!">
+	</form>
+</body>
+</html>

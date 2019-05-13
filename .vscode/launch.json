@@ -1,0 +1,34 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Assignment3",
+            "request": "launch",
+            "mainClass": "Assignment3"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - teaganShepherdSolution",
+            "request": "launch",
+            "mainClass": "teaganShepherdSolution"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - CarTest",
+            "request": "launch",
+            "mainClass": "CarTest"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - BrickBreaker",
+            "request": "launch",
+            "mainClass": "BrickBreaker"
+        },
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Assignment1",
+            "request": "launch",
+            "mainClass": "Assignment1"
+        }
+    ]
+}

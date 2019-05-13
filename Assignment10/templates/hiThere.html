@@ -1,0 +1,18 @@
+<html>
+<head>
+	<title>Assignment 10</title>
+
+</head>
+<body>
+	<p>Hi there {{firstname}} {{lastname}}!  Let's play a super fun game!</p>
+	<p>I'm thinking of a number between from 1 to 5.  See if you can guess it!</p>
+	<form method="post" action="/guessed">
+		Your guess: <input type="text" name="guess">
+        <input type="hidden" name="answer" value={{randomNum}}>
+        
+		<input type="submit" value="Guess!">
+    </form>
+    
+</body>
+</html>
+
